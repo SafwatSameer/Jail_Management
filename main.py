@@ -1,0 +1,174 @@
+@app.route('/login', methods = ['GET','POST'])
+def login():
+    failed = ""
+    session['email'] = ""
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+        # Database connect
+        conn = MySQLdb.connect(host='localhost', user='root', passwd='', db='jailmanage')
+        cursor = conn.cursor()
+        # Query execute
+        cursor.execute('SELECT * FROM user WHERE email = %s', (email,))
+        # Matched row in 'user'
+        user = cursor.fetchone()
+        if user is not None:
+            hashed_password = hashlib.sha256(password.encode('utf-8')).hexdigest()
+            cursor.execute('SELECT * FROM user WHERE password = %s And email = %s', (hashed_password,email))
+            user1 = cursor.fetchone()
+            if user1 is not None:
+                session['id'] = user[0]
+                session['email'] = user[3]
+                if user[2] == "Cleaner":
+                    return redirect(url_for('cleaner'))
+                elif user[2] == "Chef":
+                    return redirect(url_for('chef'))
+
+                else:
+                    return redirect(url_for('police'))
+            else:
+                failed = "Password Does Not Match!"
+        else:
+            failed = "Email Not Found!"
+        
+    return render_template('login.html', failed=failed)
+
+@app.route('/admin', methods = ['GET','POST'])
+def admin():
+    failed = ""
+    session['email'] = ""
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+        # Database connect
+        conn = MySQLdb.connect(host='localhost', user='root', passwd='', db='jailmanage')
+        cursor = conn.cursor()
+        # Query execute
+        cursor.execute('SELECT * FROM admin WHERE `email` = %s', (email,))
+        # Matched row in 'user'
+        user = cursor.fetchone()
+
+        if user is not None:
+            hashed_password = hashlib.sha256(password.encode('utf-8')).hexdigest()
+            cursor.execute('SELECT * FROM admin WHERE password = %s And email = %s', (hashed_password,email))
+            user1 = cursor.fetchone()
+            if user1 is not None:
+                session['email'] = user[1]
+                return redirect(url_for('adminDash'))
+            else:
+                failed = "Password Does Not Matched!"
+                # return redirect(url_for('admin'))
+        else:
+            failed = "Email Not Found!"
+    return render_template('admin.html',failed=failed)
+
+
+@app.route('/cleaner', methods = ['GET','POST'])
+def cleaner():
+    conn = MySQLdb.connect(host='localhost', user='root', passwd='', db='jailmanage')
+    cursor = conn.cursor()
+    # Query execute
+    cursor.execute('SELECT * FROM user WHERE email = %s', (session['email'],))
+    # Matched row in 'user'
+    user = cursor.fetchone()
+    if user != None:
+        if user[2] == 'Cleaner':
+            # Database connect
+            conn = MySQLdb.connect(host='localhost', user='root', passwd='', db='jailmanage')
+            cursor = conn.cursor()
+            # Query execute
+            cursor.execute('SELECT * FROM schedule WHERE email = %s And type = %s' , (session['email'],'Not Assigned'))
+            # Matched row in 'user'
+            user = cursor.fetchall()
+            # Create a new tuple with the additional element "Cleaner"
+            cursor.execute('SELECT * FROM user WHERE email = %s', (session['email'],))
+            # Matched row in 'user'
+            user = cursor.fetchall()
+            user = user[0] + ('Cleaner',)
+            # Create a double tuple with the inner tuple
+            user = (user,)
+            return render_template('cleaner.html',user=user,email=session['email'])
+
+        else:
+            return render_template('error.html')
+    else:
+        return render_template('error.html')
+
+@app.route('/police', methods = ['GET','POST'])
+def police():
+
+    conn = MySQLdb.connect(host='localhost', user='root', passwd='', db='jailmanage')
+    cursor = conn.cursor()
+    # Query execute
+    cursor.execute('SELECT * FROM user WHERE email = %s', (session['email'],))
+    # Matched row in 'user'
+    user = cursor.fetchone()
+    if user != None:
+        if user[2] == 'Police':
+                # Database connect
+            conn = MySQLdb.connect(host='localhost', user='root', passwd='', db='jailmanage')
+            cursor = conn.cursor()
+            # Query execute
+            cursor.execute('SELECT * FROM schedule WHERE email = %s', (session['email'],))
+            # Matched row in 'user'
+            user = cursor.fetchall()
+            # Database connect
+            conn = MySQLdb.connect(host='localhost', user='root', passwd='', db='jailmanage')
+            cursor = conn.cursor()
+            # Query execute
+            cursor.execute('SELECT * FROM schedule WHERE email = %s And type = %s' , (session['email'],'Not Assigned'))
+            # Matched row in 'user'
+            user = cursor.fetchall()
+            # Create a new tuple with the additional element "Cleaner"
+
+            cursor.execute('SELECT * FROM user WHERE email = %s', (session['email'],))
+            # Matched row in 'user'
+            user = cursor.fetchall()
+            user = user[0] + ('Police',)
+            # Create a double tuple with the inner tuple
+            user = (user,)
+            return render_template('police.html',user=user,email=session['email'])
+
+        else:
+            return render_template('error.html')
+    else:
+        return render_template('error.html')
+
+@app.route('/chef', methods = ['GET','POST'])
+def chef():
+    conn = MySQLdb.connect(host='localhost', user='root', passwd='', db='jailmanage')
+    cursor = conn.cursor()
+    # Query execute
+    cursor.execute('SELECT * FROM user WHERE email = %s', (session['email'],))
+    # Matched row in 'user'
+    user = cursor.fetchone()
+    if user != None:
+        if user[2] == 'Chef':
+            # Database connect
+            conn = MySQLdb.connect(host='localhost', user='root', passwd='', db='jailmanage')
+            cursor = conn.cursor()
+            # Query execute
+            cursor.execute('SELECT * FROM schedule WHERE email = %s', (session['email'],))
+            # Matched row in 'user'
+            user = cursor.fetchall()
+            # Database connect
+            conn = MySQLdb.connect(host='localhost', user='root', passwd='', db='jailmanage')
+            cursor = conn.cursor()
+            # Query execute
+            cursor.execute('SELECT * FROM schedule WHERE email = %s And type = %s' , (session['email'],'Not Assigned'))
+            # Matched row in 'user'
+            user = cursor.fetchall()
+            # Create a new tuple with the additional element "Cleaner"
+
+            cursor.execute('SELECT * FROM user WHERE email = %s', (session['email'],))
+            # Matched row in 'user'
+            user = cursor.fetchall()
+            user = user[0] + ('Chef',)
+            # Create a double tuple with the inner tuple
+            user = (user,)
+            return render_template('chef.html',user=user,email=session['email'])
+
+        else:
+            return render_template('error.html')
+    else:
+        return render_template('error.html')
