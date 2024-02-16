@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 16, 2024 at 07:02 PM
+-- Generation Time: Feb 16, 2024 at 07:22 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -67,17 +67,6 @@ CREATE TABLE `schedule` (
   `time` varchar(20) NOT NULL,
   `role` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `schedule`
---
-
-INSERT INTO `schedule` (`name`, `email`, `type`, `shift`, `time`, `role`) VALUES
-('Alif Hossain', 'alif@gmail.com', 'Not Assigned', 'Not Assigned', 'Not Assigned', 'Police'),
-('Bilkis Begum', 'bilkis@gmail.com', 'Wash Dish', 'Night', '9PM - 12AM', 'Chef'),
-('Kuddus Miah', 'kuddus@gmail.com', 'Laundry', 'Night', '9PM - 12AM', 'Police'),
-('Safwat Samir', 'samir@gmail.com', 'Guard Room 1', 'Day', '8AM - 3PM', 'Police'),
-('Shuvo Talukders', 'shuvo@gmail.com', 'Room Cleaning', 'Day', '8AM - 3PM', 'Cleaner');
 
 -- --------------------------------------------------------
 
