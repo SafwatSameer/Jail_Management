@@ -38,9 +38,32 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`name`, `email`, `password`) VALUES
-('Syed Safwat Sameer', 'sameer@gmail.com', '93a5086d4a0f21b634c2518c249523247ebba14f0cabf5ae5bee54bfd5588556');
+('Group 3', 'sameer@gmail.com', '93a5086d4a0f21b634c2518c249523247ebba14f0cabf5ae5bee54bfd5588556');
 
 -- --------------------------------------------------------
+
+-- Table structure for table `prisoner`
+--
+
+CREATE TABLE `prisoner` (
+  `id` int(11) NOT NULL,
+  `name` varchar(200) NOT NULL,
+  `age` int(11) NOT NULL,
+  `birth` date NOT NULL,
+  `record` varchar(50) NOT NULL,
+  `cell` varchar(50) NOT NULL,
+  `year` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+-- Dumping data for table `prisoner`
+--
+
+INSERT INTO `prisoner` (`id`, `name`, `age`, `birth`, `record`, `cell`, `year`) VALUES
+(8, 'Kala Manik', 45, '1993-07-12', 'Drug Dealing', '2A', '5 years'),
+(12, 'Alison Burger', 45, '1995-07-11', 'Robbery', '1B', '2 years'),
+(14, 'Ted Bundy', 40, '1970-07-05', 'Serial Killer', '2B', 'Death Sentence');
+
 
 --
 -- Table structure for table `request`
@@ -52,6 +75,7 @@ CREATE TABLE `request` (
   `reason` varchar(1000) NOT NULL,
   `role` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 
 -- --------------------------------------------------------
 
@@ -71,6 +95,15 @@ CREATE TABLE `schedule` (
 -- --------------------------------------------------------
 
 --
+
+-- Dumping data for table `schedule`
+--
+
+INSERT INTO `schedule` (`name`, `email`, `type`, `shift`, `time`, `role`) VALUES
+('Shariful Alam', 'sam@gmail.com', 'Special', 'Night', '9PM - 12AM', 'Cleaner'),
+('Shafin Mufdi', 'shafin@gmail.com', 'Special', 'Day', '8AM - 3PM', 'Police'),
+('Shadman Shakib', 'shakib@gmail.com', 'Wash Dish', 'Night', '9PM - 12AM', 'Chef');
+
 -- Table structure for table `user`
 --
 
@@ -81,7 +114,6 @@ CREATE TABLE `user` (
   `email` varchar(200) NOT NULL,
   `password` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 --
 -- Dumping data for table `user`
 --
@@ -101,6 +133,10 @@ INSERT INTO `user` (`id`, `name`, `role`, `email`, `password`) VALUES
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`email`);
 
+-- Indexes for table `prisoner`
+--
+ALTER TABLE `prisoner`
+  ADD PRIMARY KEY (`id`);
 --
 -- Indexes for table `request`
 --
@@ -123,11 +159,16 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for dumped tables
 --
 
+-- AUTO_INCREMENT for table `prisoner`
+--
+ALTER TABLE `prisoner`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
