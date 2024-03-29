@@ -15,8 +15,6 @@ def adminDash_route(app):
             cursor.execute('SELECT role, COUNT(*) as role_count FROM user WHERE role IN (%s, %s, %s) GROUP BY role', ('Cleaner', 'Chef', 'Police'))
             # Matched row in 'user'
             user = cursor.fetchall()
-
-
             cursor.execute('''
         SELECT roles.role, COALESCE(COUNT(request.role), 0) as role_count
         FROM (
