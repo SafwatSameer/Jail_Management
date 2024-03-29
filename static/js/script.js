@@ -18,7 +18,7 @@ function editDeputy(u1, index) {
     element.style.color = "black";
   });
   document.querySelector(".email").value = u1;
-  
+
   document.querySelectorAll(`.row-${index}`).forEach((element) => {
     element.style.backgroundColor = "black";
     element.style.color = "white";
@@ -51,7 +51,20 @@ const change = (num) => {
   } else {
     document.querySelector(".change-schedule").style.display = "none";
     document.querySelector(".section-schedule").style.filter = "blur(0px)";
-    document.querySelector(".section-schedule").style.backgroundColor = '';
+    document.querySelector(".section-schedule").style.backgroundColor = "";
+  }
+};
+
+const change2 = (num) => {
+  if (num === 1) {
+    document.querySelector(".change-schedule2").style.display = "block";
+    document.querySelector(".section-schedule").style.filter = "blur(5px)";
+    document.querySelector(".section-schedule").style.backgroundColor =
+      "#ffffff90";
+  } else {
+    document.querySelector(".change-schedule2").style.display = "none";
+    document.querySelector(".section-schedule").style.filter = "blur(0px)";
+    document.querySelector(".section-schedule").style.backgroundColor = "";
   }
 };
 
