@@ -15,6 +15,8 @@ def adminDash_route(app):
             cursor.execute('SELECT role, COUNT(*) as role_count FROM user WHERE role IN (%s, %s, %s) GROUP BY role', ('Cleaner', 'Chef', 'Police'))
             # Matched row in 'user'
             user = cursor.fetchall()
+            cursor.execute('SELECT COUNT(*) as row_count FROM prisoner')
+            prisoner = cursor.fetchone()
             cursor.execute('''
         SELECT roles.role, COALESCE(COUNT(request.role), 0) as role_count
         FROM (
@@ -28,4 +30,7 @@ def adminDash_route(app):
         GROUP BY roles.role
     ''')
             req = cursor.fetchall()
-            return render_template('adminDash.html',user=user,req=req)
+            cursor.execute('SELECT COUNT(*) as row_count FROM needs WHERE status = "pending"')
+            needs = cursor.fetchone()
+            return render_template('adminDash.html',user=user,prisoner=prisoner,req=req, needs=needs)
+        
