@@ -2,8 +2,7 @@
   <div class="schedule-main">
     <h1 class="schedule-title">Work Schedule</h1>
     <h1 class="schedule-failed">{{ req }}</h1>
-    {% for user in user %}
-    {% if user[1]  == email %}
+    {% for user in user %} {% if user[1] == email %}
     <p class="staff-details row-{{ loop.index }}">
       <span class="schedule-span">Name:</span> {{ user[0] }}
     </p>
@@ -22,9 +21,16 @@
     <p class="staff-details row-{{ loop.index }}">
       <span class="schedule-span">Duration:</span> {{ user[4] }}
     </p>
-    <button class="staff-btn" onclick="change(1)">
-      Request Schedule Change
-    </button>
+    <div class="btn-2-police">
+      <button class="staff-btn" onclick="change(1)">
+        Request Schedule Change
+      </button>
+      {% if user[5] == "Police" %}
+      <button class="staff-btn" onclick="change2(1)">
+        Request Prisoner Needs
+      </button>
+      {% endif %}
+    </div>
     {% else %}
     <p class="staff-details row-{{ loop.index }}">
       <span class="schedule-span">Name:</span> {{ user[1] }}
@@ -44,12 +50,8 @@
     <p class="staff-details row-{{ loop.index }}">
       <span class="schedule-span">Duration:</span> Not Assigned
     </p>
-    <!-- <button disabled class="staff-btn" onclick="change(1)">
-      Request Schedule Change
-    </button> -->
-    {% endif %}
 
-    {% endfor %}
+    {% endif %} {% endfor %}
   </div>
 </section>
 
@@ -85,6 +87,31 @@
       placeholder="Type..."
     ></textarea>
     <input class="account-btn" name="btn" value="Submit" type="submit" />
+  </div>
+</form>
+
+<form class="change-schedule2" method="post" action="/police">
+  <div class="change-btn-div">
+    <button type="button" class="change-btn" onclick="change2(2)">X</button>
+  </div>
+  <div class="change-div">
+    <h1 class="account-failed">{{failed}}</h1>
+    <h1>Needs</h1>
+    <textarea
+      required
+      class="account-input"
+      name="needs"
+      id=""
+      cols="30"
+      rows="10"
+      placeholder="Prisoner Info and his needs.."
+    ></textarea>
+    <input
+      class="account-btn"
+      name="btn"
+      value="Submit"
+      type="submit"
+    />
   </div>
 </form>
 
