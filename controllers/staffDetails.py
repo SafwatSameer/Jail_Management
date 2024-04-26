@@ -110,7 +110,7 @@ def staffDetails_route(app):
                     cursor.execute('SELECT * FROM user')
                     # Matched row in 'user'
                     user = cursor.fetchall()
-                    # failed="Deleted!"
+                    failed="Deleted!"
 
             return render_template('staffDetails.html',user=user,failed=failed,info=info)
         
